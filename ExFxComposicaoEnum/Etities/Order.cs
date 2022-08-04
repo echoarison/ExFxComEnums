@@ -11,16 +11,18 @@ namespace ExFxComposicaoEnum.Etities
         private DateTime _moment;
         private OrderStatus _status;
         private List<OrderItem> _orderItens = new List<OrderItem>();    //para não da null List e class composicao
+        private Client _client; //class composicao
 
         //Construto
         public Order()
         {
         }
 
-        public Order(DateTime moment, OrderStatus status)
+        public Order(DateTime moment, OrderStatus status, Client client)
         {
             _moment = moment;
             _status = status;
+            _client = client;
         }
 
         //get e set
@@ -44,6 +46,14 @@ namespace ExFxComposicaoEnum.Etities
             get { return _orderItens; }
 
             set { _orderItens = value; }
+
+        }
+
+        public Client Client
+        {
+            get { return _client; }
+
+            set { _client = value; }
 
         }
 
@@ -76,6 +86,37 @@ namespace ExFxComposicaoEnum.Etities
 
             return sumTotal;
 
+        }
+
+        //override
+        public override string ToString()
+        {
+
+            /**
+             * 
+             * Usando o StringBuilder para construir o texto
+             * 
+             **/
+            StringBuilder sb = new StringBuilder();
+
+            //construindo o texto
+            sb.AppendLine("ORDER SUMMARY: ");
+            sb.AppendLine("Order moment: " + Moment.ToString("dd/MM/yyyy HH:mm:ss"));
+            sb.Append("Order status: ");
+            sb.AppendLine(Status.ToString());
+            sb.Append("Client: ");
+            sb.Append(Client.Name);
+            sb.Append(" (" + Client.BrithDate.ToString() + ") - ");
+            sb.AppendLine(Client.Email);
+            sb.AppendLine("Order items: ");
+
+            //Acessando a list com foreach
+            foreach (OrderItem item in OrderItens)
+            {
+                sb.AppendLine(item.ToString());
+            }
+
+            return sb.ToString();
         }
     }
 }
